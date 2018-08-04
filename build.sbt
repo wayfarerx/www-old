@@ -1,4 +1,4 @@
-
+import Dependencies._
 
 lazy val common = Seq(
   organization := "net.wayfarerx",
