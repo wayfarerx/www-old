@@ -1,14 +1,54 @@
 import Dependencies._
 
+
 lazy val common = Seq(
-  organization := "net.wayfarerx",
-  scalaVersion := "2.12.1",
-  version := "0.1.0-SNAPSHOT"
+  organization := "net.wayfarerx.www",
+  scalaVersion := "2.12.8",
+  version := "0.1.0",
+  resolvers += wayfarerxRepository,
+  libraryDependencies += ScalaTest % Test
 )
+
+lazy val api = (project in file("api")).
+  settings(
+    common,
+    name := "www-api",
+    libraryDependencies ++= Seq(
+      OversiteApi,
+      OversiteUi
+    )
+  )
+
+lazy val code = (project in file("code")).
+  settings(
+    common,
+    name := "www-code"
+  ).dependsOn(api)
+
+lazy val drinks = (project in file("drinks")).
+  settings(
+    common,
+    name := "www-drinks"
+  ).dependsOn(api)
+
+lazy val games = (project in file("games")).
+  settings(
+    common,
+    name := "www-games"
+  ).dependsOn(api)
+
+lazy val thoughts = (project in file("thoughts")).
+  settings(
+    common,
+    name := "www-thoughts"
+  ).dependsOn(api)
 
 lazy val site = (project in file("site")).
   settings(
     common,
     name := "www-site",
-    libraryDependencies += scalaTest % Test
-  )
+    libraryDependencies ++= Seq(
+      OversiteGenerator,
+      OversiteServer
+    )
+  ).dependsOn(code, drinks, games, thoughts)
