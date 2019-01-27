@@ -26,7 +26,7 @@ deploy:
   keep-history: true
   local-dir: target/oversite
   fqdn: wayfarerx.net
-  repo: wayfarerx.github.io
+  repo: wayfarerx/wayfarerx.github.io
   target-branch: master
   on:
     branch: master
