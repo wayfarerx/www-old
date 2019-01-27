@@ -1,5 +1,8 @@
 import Dependencies._
 
+val generateSite = taskKey[Int]("Generates the website.")
+
+val serveSite = taskKey[Int]("Serves the website.")
 
 lazy val common = Seq(
   organization := "net.wayfarerx.www",
@@ -8,6 +11,10 @@ lazy val common = Seq(
   resolvers += wayfarerxRepository,
   libraryDependencies += ScalaTest % Test
 )
+
+lazy val root = (project in file(".")).
+  settings(
+  ).aggregate(api, code, drinks, games, thoughts, site)
 
 lazy val api = (project in file("api")).
   settings(
@@ -50,5 +57,6 @@ lazy val site = (project in file("site")).
     libraryDependencies ++= Seq(
       OversiteGenerator,
       OversiteServer
-    )
+    ),
+    mainClass in (Compile, run) := Some("net.wayfarerx.oversite.generator.Main")
   ).dependsOn(code, drinks, games, thoughts)

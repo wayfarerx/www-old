@@ -10,7 +10,7 @@ scala:
 - 2.12.8
 
 script:
-- sbt ++$TRAVIS_SCALA_VERSION package
+- sbt ++$TRAVIS_SCALA_VERSION "project site" "run net.wayfarerx.www.site.Website"
 
 jdk:
 - oraclejdk8
@@ -18,3 +18,15 @@ jdk:
 notifications:
   email:
   - x@wayfarerx.net
+
+deploy:
+  provider: pages
+  skip-cleanup: true
+  github-token: $GITHUB_TOKEN
+  keep-history: true
+  local-dir: target/oversite
+  fqdn: wayfarerx.net
+  repo: wayfarerx.github.io
+  target-branch: master
+  on:
+    branch: master
